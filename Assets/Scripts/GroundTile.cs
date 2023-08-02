@@ -1,13 +1,15 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-    GroundSpawner groundSpawner;
+    private GroundSpawner groundSpawner;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         groundSpawner = GameObject.FindObjectOfType<GroundSpawner>();
+		SpawnObstacle();
     }
 
     private void OnTriggerExit(Collider other)
@@ -16,9 +18,13 @@ public class NewBehaviourScript : MonoBehaviour
         Destroy(gameObject, 2);
     }
 
-    // Update is called once per frame
-    void Update()
+    public GameObject obstaclePrefab;
+
+    private void SpawnObstacle()
     {
-        
+        int obstacleSpawnIndex = Random.Range(2, 4);
+        Transform spawnPoint = transform.GetChild(obstacleSpawnIndex).transform;
+
+        Instantiate(obstaclePrefab, spawnPoint.position, Quaternion.identity, transform);
     }
 }
